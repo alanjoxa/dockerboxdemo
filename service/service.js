@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
 
+var debug = require('debug')('client-tester');
+
 var Redis = require('ioredis');
 var redis = new Redis(6379, "redis");
 
