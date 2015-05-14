@@ -1,8 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var http = require('http');
-
-var debug = require('debug')('client-tester');
+var morgan = require('morgan')
 
 var Redis = require('ioredis');
 var redis = new Redis(6379, "redis");
@@ -16,7 +15,7 @@ app.set('view engine', 'jade');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-
+app.use(morgan('combined'));
 
 redis.set('todo', JSON.stringify([]));
 
