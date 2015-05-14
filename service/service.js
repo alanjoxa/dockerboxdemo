@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var http = require('http');
 
 var Redis = require('ioredis');
-var redis = new Redis(6379, "redis.domain.com");
+var redis = new Redis(6379, "redis");
 
 http.globalAgent.maxSockets = Infinity;
 
@@ -15,11 +15,29 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-redis.set('foo', 'bar');
 
-app.get('/getdata/:id', function(req, res, next){
-	redis.get('foo', function (err, result) {
-		res.json(result);
+redis.set('todo', JSON.stringify([]));
+
+app.get('/', function(req, res, next){
+	redis.get('todo', function (err, result) {
+		var todo = JSON.parse(result);
+		res.json(todo);
+	});
+});
+
+app.get('/get/:id', function(req, res, next){
+	redis.get('todo', function (err, result) {
+		var todo = JSON.parse(result);
+		res.json(todo[req.params.id]);
+	});
+});
+
+app.post('/add', function(req, res, next){	
+	redis.get('todo', function (err, result) {
+		var todo = JSON.parse(result);
+		todo.push(req.body);
+		redis.set('todo', JSON.stringify(todo));
+		res.send(200);
 	});
 });
 
