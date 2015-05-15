@@ -1,0 +1,29 @@
+doctype html
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		title= title
+		link(rel='stylesheet', href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css')
+	body
+		div(style='margin:100px;')
+			h1 Todo List
+			table.pure-table
+				thead
+					tr
+						th #
+						th Item
+						th Description
+				tbody
+					- var count = 0;
+					each item in todo
+						tr
+							td=(++count)
+							td=item.item
+							td=item.desc
+			form.pure-form(action="/" method="POST")
+				fieldset
+					legend Add to list
+					input(type="text" name="item" placeholder="Item" style='margin-right:10px;')
+					input(type="text" name="desc" placeholder="Description" style='margin-right:10px;')
+					button(type="submit" class="pure-button pure-button-primary") Add
