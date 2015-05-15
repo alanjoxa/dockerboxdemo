@@ -11,7 +11,7 @@ http.globalAgent.maxSockets = Infinity;
 var app = express();
 
 // view engine setup
-app.set('views', './view');
+app.set('views', __dirname + '/view');console.log( __dirname + '/view');
 app.set('view engine', 'jade');
 
 app.use(bodyParser.json());
